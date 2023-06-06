@@ -1,6 +1,9 @@
 import gspread
 import random
+import os
+import colorama
 from google.oauth2.service_account import Credentials
+from colorama import Fore, Back, Style
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -16,7 +19,43 @@ SHEET = GSPREAD_CLIENT.open('score')
 #print(SHEET.worksheet("score").get_all_values())
 color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White']
 color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White'}
+unknown = ['UNK', 'UNK', 'UNK']
+chances = 8
 
+def clear_screen():
+    os.system('clear')
+
+def welcome(unknown, chances):
+    welcome = '{:^100}'
+    print("*" * 100)
+    print()
+    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
+    print(Style.RESET_ALL)
+    print("*" * 100)
+
+    print(Fore.BLUE + """
+You have to crack the color code in as few attempts
+as possible. There are total of 8 attempts.
+
+The color code will be consisting of either 3, 4, or 5 colors , depending on the difficulty 
+of the game you choose (Easy, Medium or Difficult).
+
+Example:
+Easy : Green White Yellow
+Medium: White Yellow Red Blue
+Difficult: Green White Red Purple Blue
+
+You will be asked to enter your color code guess.  
+
+You will be told how close you are if you don't get the exact code
+
+Hit -> If you get a right color on exact position
+Miss-> If you get the right color but on different position
+
+If you get the color code exactly right you have won the game.
+
+GOOD LUCK !!! """)
+  
 
 def create_color_code(color_list):
     random_color_code = random.sample(color_list, k=5)
@@ -30,10 +69,6 @@ def take_input():
     for color in color_code_list:
         color_list.append(color_list_map[color])    
     return color_list
-    #print(f'You enter {color_code} : {color_list_map[color_code]}')
-
-color_passcode = create_color_code(color_list)
-color_input = take_input()
 
 def compare_colors(passcode, color_input):
     hit = 0
@@ -55,4 +90,13 @@ def compare_colors(passcode, color_input):
     else:
          print(f'Try again...')
 
-compare_colors(color_passcode, color_input)
+def main():
+    clear_screen()
+    color_passcode = create_color_code(color_list)
+    color_input = take_input()
+    compare_colors(color_passcode, color_input)
+
+#main()
+
+welcome(unknown, chances)
+
