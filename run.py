@@ -22,7 +22,7 @@ color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow
 unknown = []
 guess_code = []
 attempts = 8
-input_store={0:[guess_code]}
+input_store={0:guess_code}
 clue = {0:[0,0]}
 
 
@@ -44,7 +44,7 @@ def append_unknown_list(k):
         unknown.append("***")
         guess_code.append('---')
 
-#def game_board(attempts, unknown, color_passcode):
+
 def game_board(unknown):
         welcome = '{:^100}'
         print("*" * 100)
@@ -59,32 +59,59 @@ def game_board(unknown):
         print(*unknown, sep=" ")
         print()
 
-def guess_attempts(attempts, unknown, color_passcode):
+
+def guess_attempts(attempts, unknown, color_passcode, choice):
     count = 0
     while attempts > 0:
         game_board(unknown)
         for key in input_store:
             print(" "*10, end="")
             print(f"|  Attempt: {key}", end = "   ")
-            dict_list = input_store[key]
-            l = dict_list
             print(f'Hits: {clue[key][0]},  Misses: {clue[key][1]}', end="    ")
-            print(*l, sep=" ")
+            dict_list = input_store[key]
+            print(*dict_list, sep=" ")
         attempts -= 1
         count += 1
-        color_input = take_input(count)
+        color_input = take_input(count, choice)
         compare_colors(color_passcode, color_input,count)   
         clear_screen()
     
-def take_input(count):
-    print("Enter color code: ")
-    color_string = input().upper()
-    color_code_list = color_string.split()
+def take_input(count, choice):
+    length = choice + 2
+    print(f"\nEnter code consisting of {length} colors.")
+    print(f"Example -> r/R for Red, b/B for Blue and so on.")
+    print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']\n")
+    while True:
+        color_string = input().upper()
+        color_code_list = color_string.split()
+
+        if validate_input(color_code_list,length):
+            print("inside except function")
+            break
     color_input =[]
     for color in color_code_list:
         color_input.append(color_list_map[color])    
     input_store[count] = color_input
     return color_input
+
+
+def validate_input(color_code_list,length):
+    flag = 0
+    try:
+        if len(color_code_list) != length:
+            raise ValueError( f"Exactly {length} values required, you provided {len(color_code_list)}")
+    except ValueError as e:
+        print(f"Invalid input: \n{e}! Type again...\n")
+        return False
+    
+    for color in color_code_list:
+        if color not in ['R','G','B','P','Y','W','C']:
+                flag = 1
+    if flag == 1:
+            print(f"Invalid input: \nChoose as described in istructions! Type again...")
+            return False
+    return True
+    
 
 def compare_colors(passcode, color_input, count):
     hit = 0
@@ -132,9 +159,8 @@ def main():
     clear_screen()
     choice = options_choice()
     color_passcode = create_color_code(color_list, choice)
-    guess_attempts(attempts, unknown, color_passcode)
-    #color_input = take_input()
-    #compare_colors(color_passcode, color_input)
+    guess_attempts(attempts, unknown, color_passcode, choice)
+    
 
 def welcome():
     welcome = '{:^100}'
