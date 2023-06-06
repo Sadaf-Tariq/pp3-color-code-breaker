@@ -1,6 +1,7 @@
 import gspread
 import random
 import os
+import sys
 import colorama
 from google.oauth2.service_account import Credentials
 from colorama import Fore, Back, Style
@@ -105,31 +106,15 @@ def check_result(count, attempt , key, choice):
     if count == attempt:
         clear_screen()
         print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n" + Fore.RESET)
-        continue_to_main()
-        
+        continue_to_main()    
 
     if clue[key][0] == choice+2:
         clear_screen()
         print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n" + Fore.RESET)
         continue_to_main()
+
     return False
 
-
-def guess_attempts1(attempts, unknown, color_passcode, choice):
-    count = 0
-    while attempts > 0:
-        game_board(unknown)
-        for key in input_store:
-            print(" "*10, end="")
-            print(f"|  Attempt: {key}", end = "   ")
-            print(f'Hits: {clue[key][0]},  Misses: {clue[key][1]}', end="    ")
-            dict_list = input_store[key]
-            print(*dict_list, sep=" ")
-        attempts -= 1
-        count += 1
-        color_input = take_input(count, choice)
-        compare_colors(color_passcode, color_input,count)   
-        clear_screen()
     
 def take_input(count, choice):
     length = choice + 2
@@ -190,22 +175,23 @@ def options_choice():
     print("-" * 20)
     print()
     print("1 - ", end="")
-    print(Fore.YELLOW + "Easy")
-    print(Style.RESET_ALL)
+    print(Fore.YELLOW + "Easy" + Fore.RESET)
     print("2 - ", end="")
-    print(Fore.BLUE + "Medium")
-    print(Style.RESET_ALL)
+    print(Fore.BLUE + "Medium" + Fore.RESET)
     print("3 - ", end="")
-    print(Fore.RED + "Difficult")
-    print(Style.RESET_ALL)
+    print(Fore.RED + "Difficult" + Fore.RESET)
+    print("4 - ", end="")
+    print(Fore.GREEN + "Exit Game" + Fore.RESET)
 
-    print("Enter your choice by pressing '1', '2' or '3' : ")
+    print("Enter your choice by pressing '1', '2', '3 or '3'")
     while True:
         key = input()
-        if key in ['1','2','3']:
+        if key in ['1','2','3','4']:
             break
         else:
             print("Invalid input, choose again!")
+    if (int(key) == 4):
+        sys.exit(0)
     clear_screen()
     return int(key)
 
