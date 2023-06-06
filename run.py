@@ -17,49 +17,27 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('score')
 
 #print(SHEET.worksheet("score").get_all_values())
-color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White']
-color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White'}
-unknown = ['UNK', 'UNK', 'UNK']
+color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Pink']
+color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White', 'P':'Pink'}
+unknown = []
 chances = 8
 
 def clear_screen():
     os.system('clear')
 
-def welcome(unknown, chances):
-    welcome = '{:^100}'
-    print("*" * 100)
-    print()
-    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
-    print(Style.RESET_ALL)
-    print("*" * 100)
-
-    print(Fore.BLUE + """
-You have to crack the color code in as few attempts
-as possible. There are total of 8 attempts.
-
-The color code will be consisting of either 3, 4, or 5 colors , depending on the difficulty 
-of the game you choose (Easy, Medium or Difficult).
-
-Example:
-Easy : Green White Yellow
-Medium: White Yellow Red Blue
-Difficult: Green White Red Purple Blue
-
-You will be asked to enter your color code guess.  
-
-You will be told how close you are if you don't get the exact code
-
-Hit -> If you get a right color on exact position
-Miss-> If you get the right color but on different position
-
-If you get the color code exactly right you have won the game.
-
-GOOD LUCK !!! """)
-  
-
-def create_color_code(color_list):
-    random_color_code = random.sample(color_list, k=5)
+def create_color_code(color_list, choice):
+    if choice == 1:
+        random_color_code = random.sample(color_list, k=3)
+    elif choice == 2:
+        random_color_code = random.sample(color_list, k=4)
+    elif choice == 3:
+        random_color_code = random.sample(color_list, k=5)
+    append_unknown_list(choice)
     return random_color_code
+
+def append_unknown_list(k):
+    for i in range(2+k):
+        unknown.append("UNK")
 
 def take_input():
     print("Enter color code: ")
@@ -90,13 +68,81 @@ def compare_colors(passcode, color_input):
     else:
          print(f'Try again...')
 
+def options_choice():
+    print("-" * 20)
+    print("Choose difficulty:")
+    print("-" * 20)
+    print()
+    print("1 - ", end="")
+    print(Fore.YELLOW + "Easy")
+    print(Style.RESET_ALL)
+    print("2 - ", end="")
+    print(Fore.BLUE + "Medium")
+    print(Style.RESET_ALL)
+    print("3 - ", end="")
+    print(Fore.RED + "Difficult")
+    print(Style.RESET_ALL)
+
+    print("Enter your choice by pressing '1', '2' or '3' : ")
+    while True:
+        key = input()
+        if key in ['1','2','3']:
+            break
+        else:
+            print("Invalid input, choose again!")
+    return int(key)
+
+
 def main():
     clear_screen()
-    color_passcode = create_color_code(color_list)
+    choice = options_choice()
+    color_passcode = create_color_code(color_list, choice)
     color_input = take_input()
     compare_colors(color_passcode, color_input)
 
-#main()
+def welcome():
+    welcome = '{:^100}'
+    print("*" * 100)
+    print()
+    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
+    print(Style.RESET_ALL)
+    print("*" * 100)
 
-welcome(unknown, chances)
+    print("""
+You have to crack the color code in as few attempts
+as possible. There are total of 8 attempts.
+
+The color code will be consisting of either 3, 4, or 5 colors , depending on the difficulty 
+of the game you choose (Easy, Medium or Difficult).
+
+Example:
+Easy : Green White Yellow
+Medium: White Yellow Red Blue
+Difficult: Green White Red Purple Blue
+
+You will be asked to enter your color code guess.  
+
+You will be told how close you are if you don't get the exact code
+
+Hit -> If you get a right color on exact position
+Miss-> If you get the right color but on different position
+
+If you get the color code exactly right you have won the game.
+
+GOOD LUCK !!! """)
+
+    print("Press 'C' or 'c' to continue.../n")
+    while True:
+        key = input()
+        if(key.upper() == 'C'):
+            main()
+            break
+        else:
+            print("Invalid input, Try again!")
+            continue
+welcome()
+
+
+
+
 
