@@ -19,7 +19,7 @@ color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow
 
 
 def create_color_code(color_list):
-    random_color_code = random.sample(color_list, k=3)
+    random_color_code = random.sample(color_list, k=5)
     return random_color_code
 
 def take_input():
@@ -36,7 +36,23 @@ color_passcode = create_color_code(color_list)
 color_input = take_input()
 
 def compare_colors(passcode, color_input):
+    hit = 0
+    miss = 0
+    flag = 0
+    
+    for color in color_input:
+        if color in passcode:
+            if color_input.index(color) == passcode.index(color):
+                hit += 1
+            else:
+                miss += 1
     print(passcode)
     print(color_input)
+    print(f'miss:{miss}')
+    print(f'hit:{hit}')  
+    if hit == 5:
+        print(f'Congratulations!!! You won...')
+    else:
+         print(f'Try again...')
 
 compare_colors(color_passcode, color_input)
