@@ -25,9 +25,30 @@ attempts = 8
 input_store={0:guess_code}
 clue = {0:[0,0]}
 
+def reset_Variables():
+    global unknown
+    unknown = []
+    global  guess_code 
+    guess_code = []
+    global input_store 
+    input_store={0:guess_code}
+    global clue
+    clue = {0:[0,0]}
+
 
 def clear_screen():
     os.system('clear')
+
+def continue_to_main():
+    print("Press 'C' or 'c' to continue.../n")
+    while True:
+        key = input()
+        if(key.upper() == 'C'):
+            main()
+            break
+        else:
+            print("Invalid input, Try again!")
+            continue
 
 def create_color_code(color_list, choice):
     if choice == 1:
@@ -61,6 +82,40 @@ def game_board(unknown):
 
 
 def guess_attempts(attempts, unknown, color_passcode, choice):
+    count = 0
+    flag = 0
+    print(color_passcode)
+    while True:
+        game_board(unknown)
+        for key in input_store:
+            print(" "*10, end="")
+            print(f"|  Attempt: {key}", end = "   ")
+            print(f'Hits: {clue[key][0]},  Misses: {clue[key][1]}', end="    ")
+            dict_list = input_store[key]
+            print(*dict_list, sep=" ")
+            if check_result(count, attempts,key, choice):
+                pass
+        count += 1
+        color_input = take_input(count, choice)
+        compare_colors(color_passcode, color_input,count)  
+        clear_screen()
+    
+        
+def check_result(count, attempt , key, choice):
+    if count == attempt:
+        clear_screen()
+        print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n" + Fore.RESET)
+        continue_to_main()
+        
+
+    if clue[key][0] == choice+2:
+        clear_screen()
+        print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n" + Fore.RESET)
+        continue_to_main()
+    return False
+
+
+def guess_attempts1(attempts, unknown, color_passcode, choice):
     count = 0
     while attempts > 0:
         game_board(unknown)
@@ -157,6 +212,7 @@ def options_choice():
 
 def main():
     clear_screen()
+    reset_Variables()
     choice = options_choice()
     color_passcode = create_color_code(color_list, choice)
     guess_attempts(attempts, unknown, color_passcode, choice)
@@ -193,16 +249,12 @@ If you get the color code exactly right you have won the game.
 
 GOOD LUCK !!! """)
 
-    print("Press 'C' or 'c' to continue.../n")
-    while True:
-        key = input()
-        if(key.upper() == 'C'):
-            main()
-            break
-        else:
-            print("Invalid input, Try again!")
-            continue
+    continue_to_main()
+
+
 welcome()
+
+
 
 
 
