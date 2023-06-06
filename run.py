@@ -17,10 +17,12 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('score')
 
 #print(SHEET.worksheet("score").get_all_values())
-color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Pink']
-color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White', 'P':'Pink'}
-unknown = []
-chances = 8
+color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']
+color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White', 'C':'Cyen'}
+unknown = ['X','X','X','X']
+guess_code = ['-','-','-','-']
+attempts = 8
+input_store={0:['-','-','-','-']}
 
 def clear_screen():
     os.system('clear')
@@ -37,22 +39,52 @@ def create_color_code(color_list, choice):
 
 def append_unknown_list(k):
     for i in range(2+k):
-        unknown.append("UNK")
+        unknown.append("X")
+        guess_code.append('-')
 
-def take_input():
+#def game_board(attempts, unknown, color_passcode):
+def game_board(attempts, unknown):
+    count = 0
+    while attempts > 0:
+        welcome = '{:^100}'
+        print("*" * 100)
+        print()
+        print(Fore.RED + welcome.format('GAME BOARD'))
+        print(Style.RESET_ALL)
+        print("*" * 100)
+        print("\n")
+        for i in range(len(unknown)):
+            unknown[i] = Fore.RED + str(unknown[i]) + Fore.RESET
+        print("The secret Color code is: ", end ="")
+        print(*unknown, sep=" ")
+        print()
+        for key in input_store:
+            print(" "*10, end="")
+            print(f"|  Attempt: {key}", end = "   ")
+            l = input_store[key]
+            print(*l, sep=" ")
+        attempts -= 1
+        count += 1
+        take_input(count)
+        clear_screen()
+    print(input_store)
+    
+    
+def take_input(count):
     print("Enter color code: ")
     color_string = input().upper()
     color_code_list = color_string.split()
     color_list =[]
     for color in color_code_list:
         color_list.append(color_list_map[color])    
-    return color_list
+    #global guess_code 
+    #guess_code = color_list
+    #print(guess_code)
+    input_store[count] = color_list
 
 def compare_colors(passcode, color_input):
     hit = 0
     miss = 0
-    flag = 0
-    
     for color in color_input:
         if color in passcode:
             if color_input.index(color) == passcode.index(color):
@@ -97,6 +129,7 @@ def main():
     clear_screen()
     choice = options_choice()
     color_passcode = create_color_code(color_list, choice)
+    game_board(attempts, unknown, color_passcode)
     color_input = take_input()
     compare_colors(color_passcode, color_input)
 
@@ -140,8 +173,8 @@ GOOD LUCK !!! """)
         else:
             print("Invalid input, Try again!")
             continue
-welcome()
-
+#welcome()
+game_board(attempts, unknown)
 
 
 
