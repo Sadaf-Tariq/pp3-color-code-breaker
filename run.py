@@ -5,6 +5,8 @@ import sys
 import colorama
 from google.oauth2.service_account import Credentials
 from colorama import Fore, Back, Style
+from pprint import pprint
+from operator import itemgetter
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -323,7 +325,30 @@ GOOD LUCK !!! """)
     continue_to_main()
 
 
-welcome()
+#welcome()
+
+def sort_spreadsheet():
+    score_sheet = SHEET.worksheet('score').get_all_values()
+    score_sheet_headings = score_sheet[0]
+    score_values = score_sheet[1:]
+    for i in score_values:
+        i[1] = int(i[1])
+    new_ssh = '            '.join(score_sheet_headings).upper()
+    underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
+    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET)
+    print()
+    sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
+    for j in sorted_list:
+        print(' '*27, end="")
+        print(f"{j[0]:16}", end ="")
+        print(f"{j[1]:<17}", end ="")
+        print(f"{j[2]}")
+        
+        
+
+    
+    
+sort_spreadsheet()
 
 
 
