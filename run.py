@@ -26,7 +26,7 @@ attempts = 8
 input_store={0:guess_code}
 clue = {0:[0,0]}
 
-def reset_Variables():
+def reset_variables():
     global unknown
     unknown = []
     global  guess_code 
@@ -41,7 +41,7 @@ def clear_screen():
     os.system('clear')
 
 def continue_to_main():
-    print("Press 'C' or 'c' to continue.../n")
+    print("Press 'C' or 'c' to continue...")
     while True:
         key = input()
         if(key.upper() == 'C'):
@@ -50,6 +50,13 @@ def continue_to_main():
         else:
             print("Invalid input, Try again!")
             continue
+def welcome_banner():
+    welcome = '{:^100}'
+    print("*" * 100)
+    print()
+    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
+    print(Style.RESET_ALL)
+    print("*" * 100)
 
 def create_color_code(color_list, choice):
     if choice == 1:
@@ -68,18 +75,19 @@ def append_unknown_list(k):
 
 
 def game_board(unknown):
-        welcome = '{:^100}'
-        print("*" * 100)
-        print()
-        print(Fore.RED + welcome.format('GAME BOARD'))
-        print(Style.RESET_ALL)
-        print("*" * 100)
-        print("\n")
-        for i in range(len(unknown)):
-            unknown[i] = Fore.RED + str(unknown[i]) + Fore.RESET
-        print("The secret Color code is: ", end ="")
-        print(*unknown, sep=" ")
-        print()
+    welcome_banner()
+    welcome1 = '{:^100}'
+    print("*" * 100)
+    print()
+    print(Fore.RED + welcome1.format('GAME BOARD'))
+    print(Style.RESET_ALL)
+    print("*" * 100)
+    print("\n")
+    for i in range(len(unknown)):
+        unknown[i] = Fore.RED + str(unknown[i]) + Fore.RESET
+    print("The secret Color code is: ", end ="")
+    print(*unknown, sep=" ")
+    print()
 
 
 def guess_attempts(attempts, unknown, color_passcode, choice):
@@ -120,13 +128,14 @@ def take_input(count, choice):
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
     print(f"Example -> r/R for Red, b/B for Blue and so on.")
-    print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']\n")
+    print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']")
+    print(f"If you want to go to the main menu. Type 'menu'.")
+    print(f"If you want to exit the game. Type 'exit'.\n")
     while True:
         color_string = input().upper()
         color_code_list = color_string.split()
 
         if validate_input(color_code_list,length):
-            print("inside except function")
             break
     color_input =[]
     for color in color_code_list:
@@ -137,6 +146,11 @@ def take_input(count, choice):
 
 def validate_input(color_code_list,length):
     flag = 0
+    if color_code_list == ['MENU']:
+        continue_to_main()
+        
+    if color_code_list == ['EXIT']:
+        sys.exit(0)
     try:
         if len(color_code_list) != length:
             raise ValueError( f"Exactly {length} values required, you provided {len(color_code_list)}")
@@ -170,6 +184,7 @@ def compare_colors(passcode, color_input, count):
 
 
 def options_choice():
+    welcome_banner()
     print("-" * 20)
     print("Choose difficulty:")
     print("-" * 20)
@@ -183,7 +198,7 @@ def options_choice():
     print("4 - ", end="")
     print(Fore.GREEN + "Exit Game" + Fore.RESET)
 
-    print("Enter your choice by pressing '1', '2', '3 or '3'")
+    print("Enter your choice by pressing '1', '2', '3 or '4'")
     while True:
         key = input()
         if key in ['1','2','3','4']:
@@ -198,20 +213,14 @@ def options_choice():
 
 def main():
     clear_screen()
-    reset_Variables()
+    reset_variables()
     choice = options_choice()
     color_passcode = create_color_code(color_list, choice)
     guess_attempts(attempts, unknown, color_passcode, choice)
     
 
 def welcome():
-    welcome = '{:^100}'
-    print("*" * 100)
-    print()
-    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
-    print(Style.RESET_ALL)
-    print("*" * 100)
-
+    welcome_banner()
     print("""
 You have to crack the color code in as few attempts
 as possible. There are total of 8 attempts.
@@ -234,7 +243,6 @@ Miss-> If you get the right color but on different position
 If you get the color code exactly right you have won the game.
 
 GOOD LUCK !!! """)
-
     continue_to_main()
 
 
