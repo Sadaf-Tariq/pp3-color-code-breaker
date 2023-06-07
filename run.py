@@ -32,6 +32,9 @@ score = 0
 
 
 class Score:
+    """
+    Class to store score details in spreadsheet
+    """
     def __init__(self, name, score, level):
         self.name = name
         self.score = score
@@ -52,6 +55,10 @@ class Score:
 
 
 def reset_variables():
+    """
+    Resets global variables when user wants to play again, 
+    aim is to not repeat or store incorrect values in spreadsheet 
+    """
     global unknown
     unknown = []
     global  guess_code 
@@ -64,10 +71,15 @@ def reset_variables():
 
 
 def clear_screen():
+    """
+    Cleans sccreen
+    """
     os.system('clear')
 
 def continue_to_main():
-
+    """
+    This function takes back to main menu 
+    """
     print("Press 'C' or 'c' to continue...")
     while True:
         key = input()
@@ -80,6 +92,9 @@ def continue_to_main():
 
 
 def welcome_banner():
+    """
+    Prints welcome heading on top of the screen
+    """
     welcome = '{:^100}'
     print("*" * 100)
     print()
@@ -88,6 +103,9 @@ def welcome_banner():
     print("*" * 100)
 
 def player_namef():
+    """
+    Takes username input
+    """
     name = '{:^100}'
     print('\n\n\n')
     print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
@@ -105,6 +123,9 @@ def player_namef():
     return True
 
 def create_color_code(color_list, choice):
+    """
+    Creates the color code for user to guess
+    """
     if choice == 1:
         random_color_code = random.sample(color_list, k=3)
     elif choice == 2:
@@ -115,12 +136,19 @@ def create_color_code(color_list, choice):
     return random_color_code
 
 def append_unknown_list(k):
+    """
+    Appends '***' and '---' for the game board 
+    acocording to the user choice
+    """
     for i in range(2+k):
         unknown.append("***")
         guess_code.append('---')
 
 
 def game_board(unknown):
+    """
+    Prints game board for the play
+    """
     welcome_banner()
     welcome1 = '{:^100}'
     print("*" * 100)
@@ -137,6 +165,10 @@ def game_board(unknown):
 
 
 def guess_attempts(attempts, unknown, color_passcode, choice):
+    """
+    Prints attempts detail on the screen after each attempt
+    made by the user
+    """
     count = 0
     flag = 0
     print(color_passcode)
@@ -154,10 +186,51 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
         color_input = take_input(count, choice)
         compare_colors(color_passcode, color_input,count)  
         clear_screen()
+
+def add_rank(j,rank,color):
+    """
+    Add ranks to the updated scoreboard
+    """
+    print(color + ' '*27, end="")
+    print(f"{j[0]+rank:16}", end ="")
+    print(f"{j[1]:<17}", end ="")
+    print(f"{j[2]}")
+
+def leaderboard():
+    """
+    Prints scoreboard(top 10) after a games is finished
+    """
+    print('\n')
+    print("SCOREBOARD".center(90, '-'))
+    print('\n\n')
+    score_sheet = SHEET.worksheet('score').get_all_values()
+    score_sheet_headings = score_sheet[0]
+    score_values = score_sheet[1:]
+    for i in score_values:
+        i[1] = int(i[1])
+    new_ssh = '            '.join(score_sheet_headings).upper()
+    underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
+    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET)
+    print()
+    sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
+    for j in sorted_list:
+        if sorted_list.index(j) == 0:
+            add_rank(j,'(1)',Fore.YELLOW)
+        elif sorted_list.index(j) == 1:
+            add_rank(j,'(2)',Fore.BLUE)
+        elif sorted_list.index(j) == 2:
+            add_rank(j,'(3)',Fore.GREEN)
+        else:
+            add_rank(j,'',Fore.RESET)
+
     
         
 def check_result(count, attempt , key, choice):
-    
+    """
+    Checks result when user enters a guess, 
+    this function compares the user guess with 
+    the random code generated
+    """
     if count == attempt+1:
         clear_screen()
         print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n")
@@ -165,6 +238,7 @@ def check_result(count, attempt , key, choice):
         print(Fore.RESET) 
         score_obj = Score(player_name, score, choice)
         score_obj.update() 
+        leaderboard()
         continue_to_main() 
           
 
@@ -175,12 +249,17 @@ def check_result(count, attempt , key, choice):
         print(Fore.RESET)
         score_obj = Score(player_name, score, choice)
         score_obj.update()
+        leaderboard()
         continue_to_main() 
 
     
     return False
 
 def cal_score(count,flag):
+    """
+    This function calculates the store based on the count of attempts
+    a code is caracked or could not be cracked under 8 attempts
+    """
     global score
     if flag == 1:
         score = 0
@@ -192,9 +271,12 @@ def cal_score(count,flag):
         
 
 def take_input(count, choice):
+    """
+    Takes input (code guess) from the user
+    """
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
-    print(f"Example -> r/R for Red, b/B for Blue and so on.")
+    print(f"Example -> r/R for Red, b/B for Blue and so on. Don't repeat colors:")
     print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']")
     print(f"If you want to go to the main menu. Type 'menu'.")
     print(f"If you want to exit the game. Type 'exit'.\n")
@@ -212,7 +294,12 @@ def take_input(count, choice):
 
 
 def validate_input(color_code_list,length):
-    flag = 0
+    """
+    Validates the color code input against duplicate values,
+    non string values, more or less color codes then required
+    """
+    flag_1 = 0
+    flag_2 = 0
     if color_code_list == ['MENU']:
         continue_to_main()
 
@@ -227,14 +314,26 @@ def validate_input(color_code_list,length):
     
     for color in color_code_list:
         if color not in ['R','G','B','P','Y','W','C']:
-                flag = 1
-    if flag == 1:
-            print(f"Invalid input: \nChoose as described in istructions! Type again...")
-            return False
+            flag_1 = 1
+    if flag_1 == 1:
+        print(f"Invalid input: \nChoose as described in istructions! Type again...")
+        return False
+
+    for color in color_code_list:
+        num = color_code_list.count(color)
+        if num > 1:
+            flag_2 = 1
+    if flag_2 == 1:
+        print(f"Invalid input: \nDo not repeat colors! Type again...")
+        return False
     return True
     
 
 def compare_colors(passcode, color_input, count):
+    """
+    Compares the actual color code with user's guess to 
+    give clue to the user
+    """
     hit = 0
     miss = 0
     
@@ -247,10 +346,11 @@ def compare_colors(passcode, color_input, count):
     l = [hit, miss]
     clue[count] = l
   
-    
-
 
 def options_choice():
+    """
+    Gives game level options to the user to choose
+    """
     welcome_banner()
     print("-" * 20)
     print("Choose difficulty:")
@@ -279,6 +379,9 @@ def options_choice():
 
 
 def main():
+    """
+    Main function to start the game
+    """
     clear_screen()
     reset_variables()
     choice = options_choice()
@@ -287,6 +390,9 @@ def main():
     
 
 def welcome():
+    """
+    Welcome function to display welcome heading and instruction
+    """
     welcome_banner()
 
     if player_namef():
@@ -325,30 +431,10 @@ GOOD LUCK !!! """)
     continue_to_main()
 
 
-#welcome()
-
-def sort_spreadsheet():
-    score_sheet = SHEET.worksheet('score').get_all_values()
-    score_sheet_headings = score_sheet[0]
-    score_values = score_sheet[1:]
-    for i in score_values:
-        i[1] = int(i[1])
-    new_ssh = '            '.join(score_sheet_headings).upper()
-    underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
-    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET)
-    print()
-    sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
-    for j in sorted_list:
-        print(' '*27, end="")
-        print(f"{j[0]:16}", end ="")
-        print(f"{j[1]:<17}", end ="")
-        print(f"{j[2]}")
-        
-        
-
+welcome()
+  
     
-    
-sort_spreadsheet()
+
 
 
 
