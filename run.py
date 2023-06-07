@@ -28,6 +28,15 @@ clue = {0:[0,0]}
 player_name = ''
 
 
+class Score:
+    def __init__(self, name, score, level):
+        self.name = name
+        self.score = score
+        self.level = level
+
+    def update(self, sheet):
+        pass
+
 def reset_variables():
     global unknown
     unknown = []
@@ -135,19 +144,26 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
     
         
 def check_result(count, attempt , key, choice):
-    if count == attempt:
+    if count == attempt+1:
         clear_screen()
-        print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n" + Fore.RESET)
+        print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n")
+        cal_score(count)
+        print(Fore.RESET)
         continue_to_main()    
 
     if clue[key][0] == choice+2:
         clear_screen()
-        print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n" + Fore.RESET)
+        print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n")
+        cal_score(count)
+        print(Fore.RESET)
         continue_to_main()
-
+    
     return False
 
-    
+def cal_score(count):
+    score = (10-(count-1))*10
+    print(f"Your score: {score} ")
+
 def take_input(count, choice):
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
