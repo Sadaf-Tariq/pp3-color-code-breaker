@@ -25,6 +25,8 @@ guess_code = []
 attempts = 8
 input_store={0:guess_code}
 clue = {0:[0,0]}
+player_name = ''
+
 
 def reset_variables():
     global unknown
@@ -35,12 +37,15 @@ def reset_variables():
     input_store={0:guess_code}
     global clue
     clue = {0:[0,0]}
+    global player_name
+    player_name = ''
 
 
 def clear_screen():
     os.system('clear')
 
 def continue_to_main():
+
     print("Press 'C' or 'c' to continue...")
     while True:
         key = input()
@@ -50,6 +55,8 @@ def continue_to_main():
         else:
             print("Invalid input, Try again!")
             continue
+
+
 def welcome_banner():
     welcome = '{:^100}'
     print("*" * 100)
@@ -57,6 +64,23 @@ def welcome_banner():
     print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
     print(Style.RESET_ALL)
     print("*" * 100)
+
+def player_name():
+    name = '{:^100}'
+    print('\n\n\n')
+    print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
+    print(' '* 47, end="")
+    global player_name
+    while True:
+        try:
+            player_name = input()
+            if not player_name.isalpha():
+                raise ValueError(f"Enter a valid name")
+            else:
+                break
+        except ValueError as e:
+            print(f"Invalid input: {e}!")
+    return True
 
 def create_color_code(color_list, choice):
     if choice == 1:
@@ -148,7 +172,7 @@ def validate_input(color_code_list,length):
     flag = 0
     if color_code_list == ['MENU']:
         continue_to_main()
-        
+
     if color_code_list == ['EXIT']:
         sys.exit(0)
     try:
@@ -221,7 +245,19 @@ def main():
 
 def welcome():
     welcome_banner()
-    print("""
+
+    if player_name():
+        clear_screen()
+        welcome_banner()
+        print("\n")
+        pname = '{:^100}'
+        print("*" * 100)
+        print()
+        print(Fore.RED + pname.format('welcome  ' + player_name + '!!!') + Fore.RESET)
+        print()
+        print("*" * 100)
+        print()
+        print("""
 You have to crack the color code in as few attempts
 as possible. There are total of 8 attempts.
 
