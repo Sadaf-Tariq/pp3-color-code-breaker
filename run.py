@@ -26,6 +26,7 @@ attempts = 8
 input_store={0:guess_code}
 clue = {0:[0,0]}
 player_name = ''
+score = 0
 
 
 class Score:
@@ -34,8 +35,19 @@ class Score:
         self.score = score
         self.level = level
 
-    def update(self, sheet):
-        pass
+    def update(self):
+        level_str = ''
+        if self.level == 1:
+            level_str = 'easy'
+        elif self.level == 2:
+            level_str = 'medium'
+        elif self.level == 3:
+            level_str = 'difficult'
+        data = [self.name, self.score, level_str]
+        score_sheet = SHEET.worksheet('score')
+        score_sheet.append_row(data)
+        #print(score_sheet.get_all_values())
+
 
 def reset_variables():
     global unknown
@@ -46,8 +58,7 @@ def reset_variables():
     input_store={0:guess_code}
     global clue
     clue = {0:[0,0]}
-    global player_name
-    player_name = ''
+    
 
 
 def clear_screen():
@@ -74,7 +85,7 @@ def welcome_banner():
     print(Style.RESET_ALL)
     print("*" * 100)
 
-def player_name():
+def player_namef():
     name = '{:^100}'
     print('\n\n\n')
     print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
@@ -144,28 +155,39 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
     
         
 def check_result(count, attempt , key, choice):
+    
     if count == attempt+1:
         clear_screen()
         print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n")
         cal_score(count,flag = 1)
-        print(Fore.RESET)
-        continue_to_main()    
+        print(Fore.RESET) 
+        score_obj = Score(player_name, score, choice)
+        score_obj.update() 
+        continue_to_main() 
+          
 
     if clue[key][0] == choice+2:
         clear_screen()
         print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n")
         cal_score(count,flag = 0)
         print(Fore.RESET)
-        continue_to_main()
+        score_obj = Score(player_name, score, choice)
+        score_obj.update()
+        continue_to_main() 
+
     
     return False
 
 def cal_score(count,flag):
+    global score
     if flag == 1:
-        print(f"Your score: 0 ")
+        score = 0
+        print(f"Your score: {score} ")
+        return score
     else:
         score = (10-(count-1))*10
         print(f"Your score: {score} ")
+        
 
 def take_input(count, choice):
     length = choice + 2
@@ -265,7 +287,7 @@ def main():
 def welcome():
     welcome_banner()
 
-    if player_name():
+    if player_namef():
         clear_screen()
         welcome_banner()
         print("\n")
@@ -302,6 +324,9 @@ GOOD LUCK !!! """)
 
 
 welcome()
+
+
+
 
 
 
