@@ -1,6 +1,6 @@
 import gspread
 import random
-from od import system
+from os import system
 import sys
 import time
 from google.oauth2.service_account import Credentials
@@ -104,16 +104,16 @@ def player_namef():
     """
     Takes username input
     """
-    name = '{:^100}'
+    name = '{:^60}'
     print('\n\n\n')
     print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
-    print(' '* 27, end="")
+    print(''*27,end="")
     global player_name
     while True:
         try:
             player_name = input('\n')
             if not player_name.isalpha():
-                raise ValueError(f"Enter a valid name")
+                raise ValueError(f"Enter a valid name.")
             else:
                 break
         except ValueError as e:
