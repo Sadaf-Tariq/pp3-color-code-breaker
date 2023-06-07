@@ -1,6 +1,6 @@
 import gspread
 import random
-import os
+from od import system
 import sys
 import time
 from google.oauth2.service_account import Credentials
@@ -73,7 +73,7 @@ def clear_screen():
     """
     Cleans sccreen
     """
-    os.system('clear')
+    system('clear')
 
 def continue_to_main():
     """
@@ -94,11 +94,11 @@ def welcome_banner():
     """
     Prints welcome heading on top of the screen
     """
-    welcome = '{:^100}'
-    print("*" * 100)
+    welcome = '{:^60}'
+    print("*" * 60)
     print()
     print(Fore.RED + welcome.format('MASTERMIND - CODE BREAKER') + Fore.RESET + '\n')
-    print("*" * 100)
+    print("*" * 60)
 
 def player_namef():
     """
@@ -107,7 +107,7 @@ def player_namef():
     name = '{:^100}'
     print('\n\n\n')
     print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
-    print(' '* 47, end="")
+    print(' '* 27, end="")
     global player_name
     while True:
         try:
@@ -148,11 +148,11 @@ def game_board(unknown):
     Prints game board for the play
     """
     welcome_banner()
-    welcome1 = '{:^100}'
-    print("*" * 100)
+    welcome1 = '{:^60}'
+    print("*" * 60)
     print()
     print(Fore.RED + welcome1.format('GAME BOARD') + Fore.RESET + '\n')
-    print("*" * 100)
+    print("*" * 60)
     print("\n")
     for i in range(len(unknown)):
         unknown[i] = Fore.RED + str(unknown[i]) + Fore.RESET
@@ -164,7 +164,7 @@ def add_rank(j,rank,color):
     """
     Add ranks to the updated scoreboard
     """
-    print(color + ' '*27, end="")
+    print(color + ' '*17, end="")
     print(f"{j[0]+rank:16}", end ="")
     print(f"{j[1]:<17}", end ="")
     print(f"{j[2]}")
@@ -174,7 +174,7 @@ def leaderboard():
     Prints scoreboard(top 10) after a games is finished
     """
     print('\n')
-    print("SCOREBOARD".center(90, '-'))
+    print("SCOREBOARD".center(70, '-'))
     print('\n\n')
     score_sheet = SHEET.worksheet('score').get_all_values()
     score_sheet_headings = score_sheet[0]
@@ -183,7 +183,7 @@ def leaderboard():
         i[1] = int(i[1])
     new_ssh = '            '.join(score_sheet_headings).upper()
     underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
-    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET + '\n')
+    print(Fore.RED + underlined_text.center(60, ' ') + Fore.RESET + '\n')
     sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
     for j in sorted_list[0:10]:
         if sorted_list.index(j) == 0:
@@ -204,7 +204,6 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
     """
     count = 0
     flag = 0
-    print(color_passcode)
     while True:
         game_board(unknown)
         for key in input_store:
@@ -393,12 +392,12 @@ def welcome():
         clear_screen()
         welcome_banner()
         print("\n")
-        pname = '{:^100}'
-        print("*" * 100)
+        pname = '{:^60}'
+        print("*" * 60)
         print()
         print(Fore.RED + pname.format('welcome  ' + player_name + '!!!') + Fore.RESET)
         print()
-        print("*" * 100)
+        print("*" * 60)
         print()
         print("""
 You have to crack the color code in as few attempts
