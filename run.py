@@ -2,10 +2,9 @@ import gspread
 import random
 import os
 import sys
-import colorama
+import time
 from google.oauth2.service_account import Credentials
-from colorama import Fore, Back, Style
-from pprint import pprint
+from colorama import Fore
 from operator import itemgetter
 
 SCOPE = [
@@ -82,7 +81,7 @@ def continue_to_main():
     """
     print("Press 'C' or 'c' to continue...")
     while True:
-        key = input()
+        key = input('\n')
         if(key.upper() == 'C'):
             main()
             break
@@ -98,8 +97,7 @@ def welcome_banner():
     welcome = '{:^100}'
     print("*" * 100)
     print()
-    print(Fore.RED + welcome.format('BREAK THE COLOR CODE'))
-    print(Style.RESET_ALL)
+    print(Fore.RED + welcome.format('MASTERMIND - CODE BREAKER') + Fore.RESET + '\n')
     print("*" * 100)
 
 def player_namef():
@@ -113,7 +111,7 @@ def player_namef():
     global player_name
     while True:
         try:
-            player_name = input()
+            player_name = input('\n')
             if not player_name.isalpha():
                 raise ValueError(f"Enter a valid name")
             else:
@@ -153,8 +151,7 @@ def game_board(unknown):
     welcome1 = '{:^100}'
     print("*" * 100)
     print()
-    print(Fore.RED + welcome1.format('GAME BOARD'))
-    print(Style.RESET_ALL)
+    print(Fore.RED + welcome1.format('GAME BOARD') + Fore.RESET + '\n')
     print("*" * 100)
     print("\n")
     for i in range(len(unknown)):
@@ -162,30 +159,6 @@ def game_board(unknown):
     print("The secret Color code is: ", end ="")
     print(*unknown, sep=" ")
     print()
-
-
-def guess_attempts(attempts, unknown, color_passcode, choice):
-    """
-    Prints attempts detail on the screen after each attempt
-    made by the user
-    """
-    count = 0
-    flag = 0
-    print(color_passcode)
-    while True:
-        game_board(unknown)
-        for key in input_store:
-            print(" "*10, end="")
-            print(f"|  Attempt: {key}", end = "   ")
-            print(f'Hits: {clue[key][0]},  Misses: {clue[key][1]}', end="    ")
-            dict_list = input_store[key]
-            print(*dict_list, sep=" ")
-            if check_result(count, attempts,key, choice):
-                pass
-        count += 1
-        color_input = take_input(count, choice)
-        compare_colors(color_passcode, color_input,count)  
-        clear_screen()
 
 def add_rank(j,rank,color):
     """
@@ -210,10 +183,9 @@ def leaderboard():
         i[1] = int(i[1])
     new_ssh = '            '.join(score_sheet_headings).upper()
     underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
-    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET)
-    print()
+    print(Fore.RED + underlined_text.center(100, ' ') + Fore.RESET + '\n')
     sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
-    for j in sorted_list:
+    for j in sorted_list[0:10]:
         if sorted_list.index(j) == 0:
             add_rank(j,'(1)',Fore.YELLOW)
         elif sorted_list.index(j) == 1:
@@ -222,37 +194,59 @@ def leaderboard():
             add_rank(j,'(3)',Fore.GREEN)
         else:
             add_rank(j,'',Fore.RESET)
+    print('\n\n')
 
+
+def guess_attempts(attempts, unknown, color_passcode, choice):
+    """
+    Prints attempts detail on the screen after each attempt
+    made by the user
+    """
+    count = 0
+    flag = 0
+    print(color_passcode)
+    while True:
+        game_board(unknown)
+        for key in input_store:
+            print(" "*10, end="")
+            print(f"|  Attempt: {key}", end = "   ")
+            print(f'Hits: {clue[key][0]},  Misses: {clue[key][1]}', end="    ")
+            dict_list = input_store[key]
+            print(*dict_list, sep=" ")
+            if check_result(count, attempts,key, choice,color_passcode):
+                pass
+        count += 1
+        color_input = take_input(count, choice)
+        compare_colors(color_passcode, color_input,count)  
+        clear_screen()
+
+def check_result_if(print_string, flag,count, attempt , key, choice,color_passcode):
+    time.sleep(2.5)
+    clear_screen()
+    game_board(color_passcode)
+    print(Fore.BLUE + print_string)
+    cal_score(count,flag)
+    print(Fore.RESET) 
+    score_obj = Score(player_name, score, choice)
+    score_obj.update() 
+    leaderboard()
+    continue_to_main() 
     
-        
-def check_result(count, attempt , key, choice):
+def check_result(count, attempt , key, choice,color_passcode):
     """
     Checks result when user enters a guess, 
     this function compares the user guess with 
     the random code generated
     """
-    if count == attempt+1:
-        clear_screen()
-        print(Fore.BLUE + f"You ran out of attempts! Better luck next time...\n\n")
-        cal_score(count,flag = 1)
-        print(Fore.RESET) 
-        score_obj = Score(player_name, score, choice)
-        score_obj.update() 
-        leaderboard()
-        continue_to_main() 
+    if count == attempt:
+        print_string = f"You ran out of attempts! Better luck next time...\n\n"
+        check_result_if(print_string, 1,count, attempt , key, choice,color_passcode)
           
 
     if clue[key][0] == choice+2:
-        clear_screen()
-        print(Fore.GREEN + f"CONGRATULATIONS! You broke the code in {count} attempts, Nice work!!!\n\n")
-        cal_score(count,flag = 0)
-        print(Fore.RESET)
-        score_obj = Score(player_name, score, choice)
-        score_obj.update()
-        leaderboard()
-        continue_to_main() 
+        print_string = f"CONGRATULATIONS! You broke the code in {count} attempt(s), Nice work!!!\n\n"
+        check_result_if(print_string, 0,count, attempt , key, choice,color_passcode)
 
-    
     return False
 
 def cal_score(count,flag):
@@ -276,12 +270,12 @@ def take_input(count, choice):
     """
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
-    print(f"Example -> r/R for Red, b/B for Blue and so on. Don't repeat colors:")
+    print(f"Example -> r/R for Red, b/B for Blue and so on with whitespace. Don't repeat colors.")
     print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']")
     print(f"If you want to go to the main menu. Type 'menu'.")
     print(f"If you want to exit the game. Type 'exit'.\n")
     while True:
-        color_string = input().upper()
+        color_string = input('\n').upper()
         color_code_list = color_string.split()
 
         if validate_input(color_code_list,length):
@@ -316,7 +310,7 @@ def validate_input(color_code_list,length):
         if color not in ['R','G','B','P','Y','W','C']:
             flag_1 = 1
     if flag_1 == 1:
-        print(f"Invalid input: \nChoose as described in istructions! Type again...")
+        print(f"Invalid input: \nChoose as described in istructions! Type again...\n")
         return False
 
     for color in color_code_list:
@@ -324,7 +318,7 @@ def validate_input(color_code_list,length):
         if num > 1:
             flag_2 = 1
     if flag_2 == 1:
-        print(f"Invalid input: \nDo not repeat colors! Type again...")
+        print(f"Invalid input: \nDo not repeat colors! Type again...\n")
         return False
     return True
     
@@ -367,7 +361,7 @@ def options_choice():
 
     print("Enter your choice by pressing '1', '2', '3 or '4'")
     while True:
-        key = input()
+        key = input('\n')
         if key in ['1','2','3','4']:
             break
         else:
