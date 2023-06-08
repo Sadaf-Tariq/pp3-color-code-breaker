@@ -4,12 +4,13 @@
 2. [How To Play](#How-To-Play)
 3. [Features](#Features)
 4. [Technologies Used](#Technologies-Used)
-5. [Testing](#Testing)
-6. [Bugs](#Bugs)
-7. [Unfixed bugs](#Unfixed-Bugs)
-8. [Validator Testing](#Validator-Testing)
-9. [Deployment](#Deployment)
-10. [Credits](#Credits)
+5. [Data Model](#Data-Model)
+6. [Testing](#Testing)
+7. [Bugs](#Bugs)
+8. [Unfixed bugs](#Unfixed-Bugs)
+9. [Validator Testing](#Validator-Testing)
+10. [Deployment](#Deployment)
+11. [Credits](#Credits)
 
 # About Mastermind-Code-Breaker
 Mastermind-Code Breaker game is a Python terminal game, which runs on the Code Institute mock terminal on Heroku
@@ -120,6 +121,18 @@ If user cracks the code in 8 attempts, they have won the game.
 #### Languages Used
 
 * Python
+
+#### Modules Used
+
+* gspread
+* os
+* sys
+* time
+* random
+* colorama
+* operator
+* google.auth
+
 
 # Testing
 
