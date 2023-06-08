@@ -33,6 +33,7 @@ There will be 8 attempts to crack the code. User will be told how close they are
 The clue will be given in the form of 'Hits' and 'Misses':
 
 Hits -> If the user gets a right color on exact position
+
 Misses-> If the user gets the right color but on different position
 
 If user cracks the code in 8 attempts, they have won the game.
@@ -148,8 +149,8 @@ If user cracks the code in 8 attempts, they have won the game.
 
 * I tested the live app on different browsers such as Microsoft Edge, Opera, Firefox, Chrome, and Safari and it works on all browser
 * I have also done manual testing for every features, every feature works as expected
-* Especially for input validation, by giving wrong inputs (wrong number of inputs, integer instead of string, duplicate inputs etc), 
-  the app handles every input ver well
+* Tested especially for input validation, by giving wrong inputs (wrong number of inputs, integer instead of string, duplicate inputs etc), 
+  the app handles every input very well
 * Tested in my local terminal and Code Institute Heroku terminal
 
 
