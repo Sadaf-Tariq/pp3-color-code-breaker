@@ -258,7 +258,7 @@ def check_result(count, attempt, key, choice, color_passcode):
 
     if clue[key][0] == choice+2:
         print_string = f"CONGRATULATIONS! You broke the code in {count}\
-         attempt(s), Nice work!!!\n\n"
+ attempt(s), Nice work!!!\n\n"
         check_result_if(print_string, 0, count, attempt, key, choice,
                         color_passcode)
 
