@@ -148,7 +148,6 @@ def game_board(unknown):
     """
     Prints game board for the play
     """
-    welcome_banner()
     welcome1 = '{:^80}'
     print("*" * 80)
     print()
@@ -175,13 +174,12 @@ def leaderboard():
     Prints scoreboard(top 10) after a games is finished
     """
     clear_screen()
-    welcome_banner()
     game_board = '{:^80}'
     print("*" * 80)
     print()
     print(Fore.RED + game_board.format('SCOREBOARD') + Fore.RESET + '\n')
     print("*" * 80)
-    print('\n\n')
+    print('\n')
     score_sheet = SHEET.worksheet('score').get_all_values()
     score_sheet_headings = score_sheet[0]
     score_values = score_sheet[1:]
@@ -200,7 +198,7 @@ def leaderboard():
             add_rank(j,'(3)',Fore.GREEN)
         else:
             add_rank(j,'',Fore.RESET)
-    print('\n\n')
+    print('\n')
     continue_to_main()
 
 
@@ -368,7 +366,7 @@ def options_choice():
     print("5 - ", end="")
     print(Fore.GREEN + "Exit Game" + Fore.RESET)
 
-    print("Enter your choice by pressing '1', '2', '3' ,'4' or '5'")
+    print("Enter your choice by pressing '1', '2', '3' ,'4' or '5':")
     while True:
         key = input('\n')
         if key in ['1','2','3','4','5']:
