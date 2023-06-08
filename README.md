@@ -37,75 +37,68 @@ Misses-> If the user gets the right color but on different position
 If user cracks the code in 8 attempts, they have won the game.
 
 # Features
-* The Header
+* Username Input
 
-  * Featured at the top of the page, the header shows the logo of the website at the right of the right corner: everything DESI that links to the home page
+  * This is the first page user will interact with
 
-  * The logo image is present at the left corner of the header that also links to the home page
+  * User will have to enter his/her name
 
-  * The header clearly shows the name of the website with a font easy to understand and a color that contrasts with the background
+  * Wrong name (with space/wrong character) Will give error and user will be asked to enter the name again
 
-    ![Header Image](/images/header.png)
+    ![Username-input](/images/username_input.png)
 
-* Navigation
+* Welcome
 
-  * Featured after the header, it contains the navigation links for the website present at the center of the navigation bar
+  * After the name is entered, the user will be welcome
 
-  * The navigation links are: Home, Menu, Gallery and contact us that links to the different pages of the website
+  * There will be two options displayed to navigate the game (Instruction or Menu)
 
-  * The navigation links make it easy for the user to find the different pages of the website and use the same color theme but different font
+    ![Welcome](/images/welcome_page.png)
 
-    ![Navigation Bar](/images/navigationbar.png)
+* Instruction Page
 
-* Main Image and Banner
+  * This page displays the complete instruction about the game to help user to understand
 
-  * This section of the page provides us with a delicate photograph of biryani in a dish, surrounded by spices. The image with an eyecatching animation lets the user envision that the goal of the website is desi food industry oriented
+    ![Instruction](/images/instruction.png)
 
-  * The main image also contains a banner with a semi-transparent background of the same color theme
+* Menu
 
-  * The cover image on the banner sums up the tone and premise of the website and strengthens the User's memory of the brand itself
+  * This page displays all the options for Level difficulty, scoreboard and to exit the game
 
-    ![Main image and banner](/images/main-image.png)
+    ![Menu](/images/menu.png)
 
-* The Kitchen
+* Levels
 
-  * This section of the page contains a brief description of what happens inside the kitchen to make the user feel trusted
+  * These are the gameboards for easy, medium and difficult levels, with three, four and five colors long code respectively
 
-    ![The kitchen](/images/kitchen.png)
+    ![Level-Easy](/images/easy_gameboard.png)
+    ![Level-Medium](/images/medium_gameboard.png)
+    ![Level-Difficult](/images/difficult_gameboard.png)
 
-* The Highlight
+* Attempts-made
 
-  * The highlight section gives the detail of everything DESI's specialty, this section ensures that the user do not loose their interest
+  * When the user makes an attempt, the number of attempt, clue and the color codes entered by the user are displayed
 
-    ![our speciality](/images/highlight.png)
+    ![Attempts](/images/attempts.png)
 
-* The Footer
+* Result
 
-  * The footer section encourages the user to keep in contact and provides a phone number, and street address where they can be found
+  * When the user is able to crack the code in less than or equal to 8 attempts, the score is displayed with 'Congratulations' message
 
-  * The footer section also includes social media icons so that users can find the catering service on Facebook, Twitter, Youtube, and Instagram
+  * When the user is unable the crack the code, a 'Lose' message is displayed with score '0' 
 
-  * The  contact information on the footer section is valuable to users as it helps them to find or contact them if they need to
+  * Score calculation: (10-(no_of_attempts-1))*10
 
-    ![The footer](/images/footer.png)
+    ![Win](/images/win.png)
+    ![Lose](/images/lose.png)
 
-* Menu Page
-
-  * The menu link on the navigation bar links the age to the Menu page, where a detailed menu is available for users to help them to find the right desi food they want to order for their important event
-
-  * It is the most important premise of the website as the majority of the users will be interested in this page hence why there is a separate page dedicated to this section and made in detail with a beautiful food background with the white font to ease accessibility
-
-    ![The menu](/images/menu.png)
-
-​    
-
-* The Gallery
+* ScoreBoard
 
   * The gallery link on the navigation bar takes the user to the gallery page where there are images available for the users 
 
   * The gallery images of food served by everything DESI and their catering service give a clear picture to users to make an informed decision
 
-    ![The gallery](/images/gallery.png)
+    ![ScoreBoard](/images/scoreboard.png)
 
 * The Contact-us Page
 
@@ -124,8 +117,7 @@ If user cracks the code in 8 attempts, they have won the game.
 
 #### Languages Used
 
-* HTML5
-* CSS3
+* Python
 
 # Testing
 
