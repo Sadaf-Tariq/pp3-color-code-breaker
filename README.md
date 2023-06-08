@@ -21,7 +21,7 @@ Users will have to crack the code in 8 attempts in order to win the game
 
 ![Responsive image](/images/amiresponsive.png)
 # How To Play
-Mastermind-Code Breaker is a classic [Mastermind(Board Game)](https://en.wikipedia.org/wiki/Mastermind_(board_game) .
+Mastermind-Code Breaker is a classic [Mastermind(Board Game)](https://en.wikipedia.org/wiki/Mastermind_(board_game)) .
 
 In this version, the user will be given the level choice of easy, medium or difficult.
 
@@ -107,6 +107,13 @@ If user cracks the code in 8 attempts, they have won the game.
 
   * There are several options given to user to exit the game
   * user can exit the game when still in the play or when on menu page
+  
+# Future Features
+  * Score calculation based on level difficulty
+  
+  * Number of attempts veried according to level difficulty
+  
+  * Options to play solo, with computer or another player
 
 # Technologies Used
 
