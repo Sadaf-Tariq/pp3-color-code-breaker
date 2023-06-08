@@ -225,7 +225,6 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
                 pass
         count += 1
         if count == attempts+1:
-            time.sleep(2.5)
             check_result(count, attempts, key, choice, color_passcode)
         color_input = take_input(count, choice)
         compare_colors(color_passcode, color_input, count)
