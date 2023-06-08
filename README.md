@@ -94,25 +94,20 @@ If user cracks the code in 8 attempts, they have won the game.
 
 * ScoreBoard
 
-  * The gallery link on the navigation bar takes the user to the gallery page where there are images available for the users 
+  * The sccoraboard is displayed with 10 top scores, the list is sorted in descending order, so that the highest score is on top
 
-  * The gallery images of food served by everything DESI and their catering service give a clear picture to users to make an informed decision
+  * The top 3 are ranked as 1st, 2nd and Third
+
+  * The score is stored in a spreadsheet with username and level difficulty
 
     ![ScoreBoard](/images/scoreboard.png)
+    ![SpreadSheet](/images/sheet.png)
 
-* The Contact-us Page
+* Exit
 
-  * The contact-us link on the navigation bar takes the user to the Contact us page, which consists of two sections. The contact section encourages the user to keep in contact and provides a phone number, email address, and street address where they can be found
+  * There are several options given to user to exit the game
+  * user can exit the game when still in the play or when on menu page
 
-  * It also includes information about its opening to help the users to know when they should be contacted
-
-  * The enquiry section has a form for the users to give all the relevant information about the enquiry they want to make. This form feature establishes a connection between the user and the site
-
-    ![The contact us page](/images/contact.png)
-
-  * When the user presses the submit with all the information, they are taken to a Thank you window, further, emphasizing interaction 
-
-    ![Thank you window](/images/thankyou.png)
 # Technologies Used
 
 #### Languages Used
