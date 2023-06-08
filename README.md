@@ -4,7 +4,7 @@
 2. [How To Play](#How-To-Play)
 3. [Features](#Features)
 4. [Technologies Used](#Technologies-Used)
-5. [Data Model](#Data-Model)
+5. [Coding Approach](#Coding-Approach)
 6. [Testing](#Testing)
 7. [Bugs](#Bugs)
 8. [Unfixed bugs](#Unfixed-Bugs)
@@ -115,6 +115,16 @@ If user cracks the code in 8 attempts, they have won the game.
   * Number of attempts veried according to level difficulty
   
   * Options to play solo, with computer or another player
+# Coding Approach
+  * I used methods to create all the features of the app and a class to store score and update spreadsheet
+  
+  * The score class stores the name, score and level in spreadsheet by calling the update method 
+  
+  * Different methods are called to perform a certain task such as: Taking input, choose an option, calculate score or display result
+  
+  * All methods are atomic
+  
+  * The app is run by calling "welcome()" method
 
 # Technologies Used
 
@@ -137,13 +147,21 @@ If user cracks the code in 8 attempts, they have won the game.
 # Testing
 
 * I tested the live app on different browsers such as Microsoft Edge, Opera, Firefox, Chrome, and Safari and it works on all browser
+* I have also done manual testing for every features, every feature works as expected
+* Especially for input validation, by giving wrong inputs (wrong number of inputs, integer instead of string, duplicate inputs etc), 
+  the app handles every input ver well
+* Tested in my local terminal and Code Institute Heroku terminal
 
 
 # Bugs
-
+* There were many errors were coming as project was progressing, all errors were solved as the projects moved forward
+* A logical error appeared with number of attempts, only 7 attempts were displayed on gameboard, I solved the error by updating "attempts+1"
+* welcome() function was giving unexpected output due to wrong indentation
+* The PEP8 validator gave errors with whitespace, trailing whitespaces and character count
+* All errors were removed
 
 # Unfixed Bugs
-
+* No bugs remaining
 
 # Validator Testing
 * [PEP8 Python Validator](https://pep8ci.herokuapp.com/)
