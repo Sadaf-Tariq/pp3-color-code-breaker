@@ -95,23 +95,10 @@ def welcome_banner():
     Prints welcome heading on top of the screen
     """
     welcome = '{:^80}'
-    mastermind1 =""" __  __           _                      _           _ 
-|  \/  | __ _ ___| |_ ___ _ __ _ __ ___ (_)_ __   __| |
-| |\/| |/ _` / __| __/ _ \ '__| '_ ` _ \| | '_ \ / _` |
-| |  | | (_| \__ \ ||  __/ |  | | | | | | | | | | (_| |
-|_|  |_|\__,_|___/\__\___|_|  |_| |_| |_|_|_| |_|\__,_|
-                                                       
-"""
-    mastermind = """ __  __      _      ____    _____   _____   ____    __  __   ___   _   _   ____  
-|  \/  |    / \    / ___|  |_   _| | ____| |  _ \  |  \/  | |_ _| | \ | | |  _ \ 
-| |\/| |   / _ \   \___ \    | |   |  _|   | |_) | | |\/| |  | |  |  \| | | | | |
-| |  | |  / ___ \   ___) |   | |   | |___  |  _ <  | |  | |  | |  | |\  | | |_| |
-|_|  |_| /_/   \_\ |____/    |_|   |_____| |_| \_\ |_|  |_| |___| |_| \_| |____/ 
-                                                                                 
-"""
+    
     print("*" * 80)
     print()
-    print(Fore.RED + welcome.format(mastermind) + Fore.RESET + '\n')
+    print(Fore.RED + welcome.format("MASTERMIND - CODE BREAKER") + Fore.RESET + '\n')
     print("*" * 80)
 
 def player_namef():
@@ -178,7 +165,7 @@ def add_rank(j,rank,color):
     """
     Add ranks to the updated scoreboard
     """
-    print(color + ' '*17, end="")
+    print(color + ' '*22, end="")
     print(f"{j[0]+rank:16}", end ="")
     print(f"{j[1]:<17}", end ="")
     print(f"{j[2]}")
@@ -189,8 +176,11 @@ def leaderboard():
     """
     clear_screen()
     welcome_banner()
-    print('\n\n')
-    print("SCOREBOARD".center(70, '-'))
+    game_board = '{:^80}'
+    print("*" * 80)
+    print()
+    print(Fore.RED + game_board.format('SCOREBOARD') + Fore.RESET + '\n')
+    print("*" * 80)
     print('\n\n')
     score_sheet = SHEET.worksheet('score').get_all_values()
     score_sheet_headings = score_sheet[0]
@@ -199,7 +189,7 @@ def leaderboard():
         i[1] = int(i[1])
     new_ssh = '            '.join(score_sheet_headings).upper()
     underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
-    print(Fore.RED + underlined_text.center(80, ' ') + Fore.RESET + '\n')
+    print(Fore.RED + underlined_text.center(90, ' ') + Fore.RESET + '\n')
     sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
     for j in sorted_list[0:10]:
         if sorted_list.index(j) == 0:
@@ -211,6 +201,7 @@ def leaderboard():
         else:
             add_rank(j,'',Fore.RESET)
     print('\n\n')
+    continue_to_main()
 
 
 def guess_attempts(attempts, unknown, color_passcode, choice):
@@ -231,6 +222,9 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
             if check_result(count, attempts,key, choice,color_passcode):
                 pass
         count += 1
+        if count == attempts+1:
+            time.sleep(2.5)
+            check_result(count, attempts,key, choice,color_passcode)
         color_input = take_input(count, choice)
         compare_colors(color_passcode, color_input,count)  
         clear_screen()
@@ -252,7 +246,7 @@ def check_result(count, attempt , key, choice,color_passcode):
     this function compares the user guess with 
     the random code generated
     """
-    if count == attempt:
+    if count == attempt+1:
         print_string = f"You ran out of attempts! Better luck next time...\n\n"
         check_result_if(print_string, 1,count, attempt , key, choice,color_passcode)
           
@@ -383,6 +377,7 @@ def options_choice():
             print("Invalid input, choose again!")
     if (int(key) == 4):
         leaderboard()
+        return 0
     if (int(key) == 5):
         sys.exit(0)
     clear_screen()
@@ -418,9 +413,10 @@ def welcome():
         print("*" * 80)
         print()
         while True:
-            print("Press 'C' or 'c' key to continue...")
+            print("Press 'I' or 'i' for Instructions.")
+            print("Press 'M' or 'm' for Game menu.")
             rkey = input('\n')
-            if rkey.upper() == 'C':
+            if rkey.upper() == 'I':
                 clear_screen()
                 print("""
 You have to crack the color code in as few attempts
@@ -442,6 +438,8 @@ If you get the color code exactly right you have won the game.
 GOOD LUCK !!! """)
                 print()
                 break
+            elif rkey.upper() == 'M':
+                main()
             else:
                 print("Invalid input! Try again")
         continue_to_main()
