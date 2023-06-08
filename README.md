@@ -13,12 +13,28 @@
 
 # About Mastermind-Code-Breaker
 Mastermind-Code Breaker game is a Python terminal game, which runs on the Code Institute mock terminal on Heroku
-Users can try to crack the color code in 8 attempts and win the game
+
+Users will get an unknown code of 3, 4 or 5 colors depending on the difficulty.
+Users will have to crack the code in 8 attempts in order to win the game
 
 [Mastermind-Code Breaker Live app](https://mastermind-code-breaker-game.herokuapp.com/)
 
 ![Responsive image](/images/amiresponsive.png)
 # How To Play
+Mastermind-Code Breaker is a classic [Mastermind(Board Game)](https://en.wikipedia.org/wiki/Mastermind_(board_game).
+
+In this version, the user will be given the level choice of easy, medium or difficult.
+
+Easy level will have three colors long code, medium and difficult will have four and five colors respectively.
+
+There will be 8 attempts to crack the code. User will be told how close they are if they don't get the exact code.
+
+The clue will be given in the form of 'Hits' and 'Misses':
+
+Hits -> If the user gets a right color on exact position
+Misses-> If the user gets the right color but on different position
+
+If user cracks the code in 8 attempts, they have won the game.
 
 # Features
 * The Header
