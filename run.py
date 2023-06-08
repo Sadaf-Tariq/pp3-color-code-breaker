@@ -233,6 +233,7 @@ def guess_attempts(attempts, unknown, color_passcode, choice):
 
 def check_result_if(print_string, flag, count, attempt, key,
                     choice, color_passcode):
+    print("wait. . .")
     time.sleep(2.5)
     clear_screen()
     game_board(color_passcode)
@@ -286,9 +287,9 @@ def take_input(count, choice):
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
     print(f"Example -> r/R for Red, b/B for Blue with whitespace.\
-    Don't repeat colors.")
+ Don't repeat colors.")
     print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple',\
-    'Yellow', 'White','Cyen']")
+ 'Yellow', 'White','Cyen']")
     print(f"For main menu -> type 'menu', to exit -> type 'exit'\n")
     while True:
         color_string = input('\n').upper()
