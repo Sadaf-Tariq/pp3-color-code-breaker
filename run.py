@@ -19,8 +19,8 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('score')
 
 #print(SHEET.worksheet("score").get_all_values())
-color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']
-color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White', 'C':'Cyen'}
+color_list = ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyan']
+color_list_map = { 'R':'Red', 'G':'Green', 'B':'Blue', 'P':'Purple', 'Y':'Yellow', 'W': 'White', 'C':'Cyan'}
 unknown = []
 guess_code = []
 attempts = 8
@@ -94,24 +94,38 @@ def welcome_banner():
     """
     Prints welcome heading on top of the screen
     """
-    welcome = '{:^60}'
-    print("*" * 60)
+    welcome = '{:^80}'
+    mastermind1 =""" __  __           _                      _           _ 
+|  \/  | __ _ ___| |_ ___ _ __ _ __ ___ (_)_ __   __| |
+| |\/| |/ _` / __| __/ _ \ '__| '_ ` _ \| | '_ \ / _` |
+| |  | | (_| \__ \ ||  __/ |  | | | | | | | | | | (_| |
+|_|  |_|\__,_|___/\__\___|_|  |_| |_| |_|_|_| |_|\__,_|
+                                                       
+"""
+    mastermind = """ __  __      _      ____    _____   _____   ____    __  __   ___   _   _   ____  
+|  \/  |    / \    / ___|  |_   _| | ____| |  _ \  |  \/  | |_ _| | \ | | |  _ \ 
+| |\/| |   / _ \   \___ \    | |   |  _|   | |_) | | |\/| |  | |  |  \| | | | | |
+| |  | |  / ___ \   ___) |   | |   | |___  |  _ <  | |  | |  | |  | |\  | | |_| |
+|_|  |_| /_/   \_\ |____/    |_|   |_____| |_| \_\ |_|  |_| |___| |_| \_| |____/ 
+                                                                                 
+"""
+    print("*" * 80)
     print()
-    print(Fore.RED + welcome.format('MASTERMIND - CODE BREAKER') + Fore.RESET + '\n')
-    print("*" * 60)
+    print(Fore.RED + welcome.format(mastermind) + Fore.RESET + '\n')
+    print("*" * 80)
 
 def player_namef():
     """
     Takes username input
     """
-    name = '{:^60}'
+    name = '{:^80}'
     print('\n\n\n')
     print(Fore.RED + name.format('Enter your first name:') + Fore.RESET)
-    print(''*27,end="")
+    print(' '*37,end="")
     global player_name
     while True:
         try:
-            player_name = input('\n')
+            player_name = input()
             if not player_name.isalpha():
                 raise ValueError(f"Enter a valid name.")
             else:
@@ -148,11 +162,11 @@ def game_board(unknown):
     Prints game board for the play
     """
     welcome_banner()
-    welcome1 = '{:^60}'
-    print("*" * 60)
+    welcome1 = '{:^80}'
+    print("*" * 80)
     print()
     print(Fore.RED + welcome1.format('GAME BOARD') + Fore.RESET + '\n')
-    print("*" * 60)
+    print("*" * 80)
     print("\n")
     for i in range(len(unknown)):
         unknown[i] = Fore.RED + str(unknown[i]) + Fore.RESET
@@ -173,7 +187,9 @@ def leaderboard():
     """
     Prints scoreboard(top 10) after a games is finished
     """
-    print('\n')
+    clear_screen()
+    welcome_banner()
+    print('\n\n')
     print("SCOREBOARD".center(70, '-'))
     print('\n\n')
     score_sheet = SHEET.worksheet('score').get_all_values()
@@ -183,7 +199,7 @@ def leaderboard():
         i[1] = int(i[1])
     new_ssh = '            '.join(score_sheet_headings).upper()
     underlined_text = "\x1B[4m" + new_ssh + "\x1B[0m"
-    print(Fore.RED + underlined_text.center(60, ' ') + Fore.RESET + '\n')
+    print(Fore.RED + underlined_text.center(80, ' ') + Fore.RESET + '\n')
     sorted_list = sorted(score_values, key = itemgetter(1), reverse = True)
     for j in sorted_list[0:10]:
         if sorted_list.index(j) == 0:
@@ -228,7 +244,6 @@ def check_result_if(print_string, flag,count, attempt , key, choice,color_passco
     print(Fore.RESET) 
     score_obj = Score(player_name, score, choice)
     score_obj.update() 
-    leaderboard()
     continue_to_main() 
     
 def check_result(count, attempt , key, choice,color_passcode):
@@ -269,10 +284,9 @@ def take_input(count, choice):
     """
     length = choice + 2
     print(f"\nEnter code consisting of {length} colors.")
-    print(f"Example -> r/R for Red, b/B for Blue and so on with whitespace. Don't repeat colors.")
+    print(f"Example -> r/R for Red, b/B for Blue with whitespace. Don't repeat colors.")
     print(f"Color choices: ['Red', 'Green', 'Blue', 'Purple', 'Yellow', 'White','Cyen']")
-    print(f"If you want to go to the main menu. Type 'menu'.")
-    print(f"If you want to exit the game. Type 'exit'.\n")
+    print(f"For main menu -> type 'menu', to exit -> type 'exit'\n")
     while True:
         color_string = input('\n').upper()
         color_code_list = color_string.split()
@@ -356,16 +370,20 @@ def options_choice():
     print("3 - ", end="")
     print(Fore.RED + "Difficult" + Fore.RESET)
     print("4 - ", end="")
+    print(Fore.MAGENTA + "Scoreboard" + Fore.RESET)
+    print("5 - ", end="")
     print(Fore.GREEN + "Exit Game" + Fore.RESET)
 
-    print("Enter your choice by pressing '1', '2', '3 or '4'")
+    print("Enter your choice by pressing '1', '2', '3' ,'4' or '5'")
     while True:
         key = input('\n')
-        if key in ['1','2','3','4']:
+        if key in ['1','2','3','4','5']:
             break
         else:
             print("Invalid input, choose again!")
     if (int(key) == 4):
+        leaderboard()
+    if (int(key) == 5):
         sys.exit(0)
     clear_screen()
     return int(key)
@@ -392,36 +410,42 @@ def welcome():
         clear_screen()
         welcome_banner()
         print("\n")
-        pname = '{:^60}'
-        print("*" * 60)
+        pname = '{:^80}'
+        print("*" * 80)
         print()
         print(Fore.RED + pname.format('welcome  ' + player_name + '!!!') + Fore.RESET)
         print()
-        print("*" * 60)
+        print("*" * 80)
         print()
-        print("""
+        while True:
+            print("Press 'C' or 'c' key to continue...")
+            rkey = input('\n')
+            if rkey.upper() == 'C':
+                clear_screen()
+                print("""
 You have to crack the color code in as few attempts
 as possible. There are total of 8 attempts.
-
 The color code will be consisting of either 3, 4, or 5 colors , depending on the difficulty 
 of the game you choose (Easy, Medium or Difficult).
 
-Example:
 Easy : Green White Yellow
 Medium: White Yellow Red Blue
 Difficult: Green White Red Purple Blue
 
 You will be asked to enter your color code guess.  
-
 You will be told how close you are if you don't get the exact code
 
 Hit -> If you get a right color on exact position
 Miss-> If you get the right color but on different position
 
 If you get the color code exactly right you have won the game.
-
 GOOD LUCK !!! """)
-    continue_to_main()
+                print()
+                break
+            else:
+                print("Invalid input! Try again")
+        continue_to_main()
+    
 
 
 welcome()
