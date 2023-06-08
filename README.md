@@ -136,40 +136,31 @@ If user cracks the code in 8 attempts, they have won the game.
 
 # Testing
 
-* I tested the website on different browsers such as Microsoft Edge, Opera, Firefox, Chrome, and Safari and it works on all browser
-* I confirm that this project is responsive, functions on all standard screen sizes, tested responsiveness using the developer tools, and looks good 
+* I tested the live app on different browsers such as Microsoft Edge, Opera, Firefox, Chrome, and Safari and it works on all browser
 
-<img src="/images/responsive(1).png"  width="750" height="500"> <img src="/images/responsive(2).png"  width="300" height="500"> <img src="/images/responsive(3).png"  width="500" height="700">
-
-* I confirm that the header, navigation bar, highlights, footer, menu, and form text are all readable and easy to understand
-* I have confirmed that the form works: requires entries in every field, will only accept emails in an email field, and the submit button works
 
 # Bugs
-* When I tested my HTML code for the index.html page on html validator, I got the error that one of the div element was unclosed which was causing another section to give another error, I solved the problem by removing that div element
-* Another error I found for the menu.html page, where I put an anchor element inside a button element, I solved that error by replacing the button to form 
-* For the style.css for the header element in a media query, I got an error because there was a margin selector that had a negative value, I solved that error by removing that selector
+
 
 # Unfixed Bugs
-There is no unfixed bugs but there is a warning indicated by html validator for gallery.html page of the website, for my design I do not need any header for this section of the page that is why this warning was not entertained
-![Warning Image](/images/warning.png)
+
 
 # Validator Testing
-* HTML
-  * No errors were returned when passing through the official [W3C validator](https://validator.w3.org/)
-* CSS
-  * No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator/)
-* Accessibility
-  * I confirmed that the colors and fonts chosen are easy to read and accessible by running it through lighthouse in developer tools
+* [PEP8 Python Validator](https://pep8ci.herokuapp.com/)
+   * PEP8 shows no errors or warning
 
-    ![Lighthouse report](/images/lighthouse.png)
+![Python Validator](/images/validator.png)
 
 # Deployment
-- The site was deployed to GitHub pages. The steps to deploy are as follows:
-  - In the GitHub repository, navigate to the Settings tab
-  - From the source section drop-down menu, select the Master Branch
-  - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
+- This project is deployed using Code Institute's mock terminal on Heroku, steps for deployment:
+  - Fork or clone this repository
+  - Create a new Heroku app
+  - Add Variables -> creds.json and PORT
+  - Set the builpacks to **Python** and **NodeJS**
+  - Link the Heroku app to repository
+  - Click on **Deploy**
 
-The live link can be found here - https://sadaf-tariq.github.io/pp1-everythingdesi/
+The live link can be found here -[Live App](https://mastermind-code-breaker-game.herokuapp.com/)
 
 # Credits
 * Content
