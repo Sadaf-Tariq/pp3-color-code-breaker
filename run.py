@@ -319,7 +319,7 @@ def validate_input(color_code_list, length):
     try:
         if len(color_code_list) != length:
             raise ValueError(f"Exactly {length} values required,\
-            you provided {len(color_code_list)}")
+ you provided {len(color_code_list)}")
     except ValueError as e:
         print(f"Invalid input: \n{e}! Type again...\n")
         return False
@@ -328,7 +328,7 @@ def validate_input(color_code_list, length):
             flag_1 = 1
     if flag_1 == 1:
         print(f"Invalid input: \nChoose as described in istructions!\
-        Type again...\n")
+ Type again...\n")
         return False
 
     for color in color_code_list:
