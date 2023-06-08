@@ -164,18 +164,14 @@ The live link can be found here -[Live App](https://mastermind-code-breaker-game
 
 # Credits
 * Content
-  * [Font awesome](https://fontawesome.com/) provided the icon for my header and cover text on the hero-image element
-  * [w3schools](https://www.w3schools.com/) helped me in creating my form
-  * [w3schools](https://www.w3schools.com/) helped me in creating my button for the menu page
-  * [StackOverflow](www.stackoverflow.com) helped me to create a custom bottom border on the speciality section heading
-  * [StackOverflow](www.stackoverflow.com) helped me to remove the error I was getting for an anchor element inside the button element
-  * The code for the social media link for the footer was taken from Code Institute [Love Running](https://github.com/Sadaf-Tariq/love-running/blob/main/index.html) project
-  * The text for the home page was taken from [Wikipedia](www.wikipedia .com) and some open-source sites
-  * The logo image for the website was taken from [Wix](www.wix.com)
-  * I got the inspiration for the website from Zouq restaurant, Koyla restaurant, and David Smyth Catering
-  * [w3schools](https://www.w3schools.com/), [StackOverflow](www.stackoverflow.com),  and Code Institute's walkthrough project [Love Running](https://github.com/Sadaf-Tariq/love-running) helped me so much throughout my project
+  * [StudyTonight](https://www.studytonight.com/python-howtos/how-to-print-colored-text-in-python) helped me to add color in text in python
+  * [w3schools](https://www.w3schools.com/python/ref_string_center.asp) helped me to print string in centre of screen
+  * [StackOverflow](https://stackoverflow.com/questions/11178061/print-list-without-brackets-in-a-single-row) helped me to print list without bracktes or colons
+  * [StackOverflow](https://stackoverflow.com/questions/67172409/is-there-a-way-to-color-individual-elements-in-a-list-in-python) helped me to reset colored string color
+  * [SimpliLearn](https://shorturl.at/gklp5) helped me to convert list to string
+  * [Finxter](https://blog.finxter.com/how-to-print-underlined-text-in-python/) helped me to write code for underline text
+  * [W3schools](https://www.w3schools.com/python/ref_string_format.asp) hepled me to learn string formatting
+  * [w3schools](https://www.w3schools.com/), [StackOverflow](www.stackoverflow.com),  and Code Institute's walkthrough project [Love Sandwiches](https://github.com/Sadaf-Tariq/LoveSandwiches) helped me so much throughout my project
 
-* Media
-  * The images used in the website were taken from [Pexels](https://www.pexels.com/)
 
 
