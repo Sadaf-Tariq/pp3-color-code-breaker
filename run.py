@@ -198,7 +198,6 @@ def leaderboard():
             add_rank(j,'(3)',Fore.GREEN)
         else:
             add_rank(j,'',Fore.RESET)
-    print('\n')
     continue_to_main()
 
 
